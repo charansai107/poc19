@@ -1,0 +1,15 @@
+---
+- hosts: localhost
+
+
+  tasks:
+
+    - name: Build Docker Image
+      command: docker build -t cicd-app .
+
+    - name: Remove Existing Container
+      command: docker rm -f cicd-container
+      ignore_errors: yes
+
+    - name: Run New Container
+      command: docker run -d -p 80:80 --name cicd-container cicd-app
